@@ -9,11 +9,11 @@ with open(filename, 'w', newline="") as file:
 mylist = ["ime", "vrednost"]
 
 #dane kolicine
-a=6377397.15500
-b=6356078.96325
+a=6377397.15500 #m
+b=6356078.96325 #m
 
 fi1 = math.radians(46.125)
-delta1 = math.radians(15.5)
+delta1 = math.radians(14.5)
 
 fi2 = math.radians(46.25)
 delta2= math.radians(14.625)
@@ -92,23 +92,60 @@ gamma= l*math.sin(fisr)+ (1/3)*l**3*math.sin(fisr)*math.cos(fisr)**2*(1+3*ni**2)
 
 mylist.extend(['sredinski fi', fisr] + ['srednji delta', deltasr] + ['l srednji', l] + ['ni sredinski', ni] + ['t srednji', t] + ['konvergenca', gamma])
 
+
+#dolzine stranic v naravi
+
+d1 = math.sqrt((x2-x1)**2+(y2-y1)**2)
+d2 = math.sqrt((x3-x2)**2+(y3-y2)**2)
+d3 = math.sqrt((x4-x3)**2+(y4-y3)**2)
+d4 = math.sqrt((x1-x4)**2+(y1-y4)**2)
+
+mylist.extend(['d1 v naravi', d1]+ ['d2 v naravi', d2]+ ['d3 v naravi', d3]+ ['d4 v naravi', d4])
+
+#dolzine stranic v merilu
+
+d_1 = d1/250000 * 100
+d_2 = d2/250000 * 100
+d_3 = d3/250000 * 100
+d_4 = d4/250000 * 100
+
+mylist.extend (['d1 v merilu', d_1] + ['d2 v merilu', d_2] + ['d3 v merilu', d_3] + ['d4 v merilu', d_4])
+
+
+
 #obratne enacbe za sp. levi kot (aka x1, y1)
 def dolzina_loka(fi, d):
-    fix= fi + 2*d/(a+b)
-    Lx= a*(1-e2)*(A*fix - (B/2)*math.sin(fix*2) + (C/4)*math.sin(4*fix) - (D/6)*math.sin(6*fix)) 
+    Lx= a*(1-e2)*(A*fi - (B/2)*math.sin(fi*2) + (C/4)*math.sin(4*fi) - (D/6)*math.sin(6*fi)) 
     dx = x1-Lx
     
-    if(dx> 0.001):
+    if(dx< 0.001 or dx > -0.001):
+        return Lx
+    else:
+        fix= fi + 2*d/(a+b)
         dolzina_loka(fix, dx)
 
 
-i = 1
-
+#zacetne kolicine, klic iteracijske funckije
 fix= 2*x1/(a+b)
 Lx= a*(1-e2)*(A*fisr - (B/2)*math.sin(fisr*2) + (C/4)*math.sin(4*fisr) - (D/6)*math.sin(6*fisr)) 
 dx= x1 - Lx
 
-dolzina_loka(fix, dx)
+Lsr = dolzina_loka(fix, dx)
+
+#pomozne kolicine
+
+n_1 = a/math.sqrt(1- e2* math.sin(fix)**2)
+t_1 = math.tan(fix)
+ni_1 = math.sqrt(e_2)*math.cos(fix)
+
+#nemodulirane koordinate so x_1 in y_1
+
+fiz = fix - (t_1/(2*n_1**2))*(1+ni_1**2)*y_1**2 + (t_1/(24*n_1**4))*(5 + 3*t_1**2 + 6*ni_1**2 - 6*ni_1**2*t_1**2)*y_1**4 - (t_1/(720*n_1**6))*(61 + 90*t_1**2 + 45*t_1**4)*y_1**6
+lz = y_1/(n_1*math.cos(fiz)) - (1+2*t_1**2*ni_1*2)/(6*n_1**3*math.cos(fiz)) + y_1**5*(5 + 28*t_1**2 + 24* t_1**4)/(120*n_1**5*math.cos(fiz))
+deltaz = 15 + math.degrees(lz)
+fiz = math.degrees(fiz)
+
+mylist.extend(['fi osnovni iterativni', fiz] + ['delta osnovni iterativni', deltaz])
 
 
 #write to csv
