@@ -104,48 +104,39 @@ mylist.extend(['d1 v naravi', d1]+ ['d2 v naravi', d2]+ ['d3 v naravi', d3]+ ['d
 
 #dolzine stranic v merilu
 
-d_1 = d1/250000 * 100
-d_2 = d2/250000 * 100
-d_3 = d3/250000 * 100
-d_4 = d4/250000 * 100
+d_1 = d1/250 
+d_2 = d2/250 
+d_3 = d3/250 
+d_4 = d4/250 
 
 mylist.extend (['d1 v merilu', d_1] + ['d2 v merilu', d_2] + ['d3 v merilu', d_3] + ['d4 v merilu', d_4])
 
+print('im before the iteration')
 
+#iteration
 
-#obratne enacbe za sp. levi kot (aka x1, y1)
-def dolzina_loka(fi, d):
-    Lx= a*(1-e2)*(A*fi - (B/2)*math.sin(fi*2) + (C/4)*math.sin(4*fi) - (D/6)*math.sin(6*fi)) 
-    dx = x1-Lx
-    
-    if(dx< 0.001 or dx > -0.001):
-        return Lx
-    else:
-        fix= fi + 2*d/(a+b)
-        dolzina_loka(fix, dx)
+fi_1 = 2*x_1/(a+b)
+L_1 = a*(1-e2)*(A*fi_1 - B/2*math.sin(2*fi_1)) + C/4*math.sin(4*fi_1) - D/6*math.sin(6*fi_1)
+d_1 = x_1-L_1
 
-
-#zacetne kolicine, klic iteracijske funckije
-fix= 2*x1/(a+b)
-Lx= a*(1-e2)*(A*fisr - (B/2)*math.sin(fisr*2) + (C/4)*math.sin(4*fisr) - (D/6)*math.sin(6*fisr)) 
-dx= x1 - Lx
-
-Lsr = dolzina_loka(fix, dx)
+while (abs(d_1)< 0.001):
+    fi_1 += 2*d_1/(a+b)
+    L_1 = a*(1-e2)*(A*fi_1 - B/2*math.sin(2*fi_1)) + C/4*math.sin(4*fi_1) - D/6*math.sin(6*fi_1)
+    d_1 = x_1 - L_1
 
 #pomozne kolicine
 
-n_1 = a/math.sqrt(1- e2* math.sin(fix)**2)
-t_1 = math.tan(fix)
-ni_1 = math.sqrt(e_2)*math.cos(fix)
+n_1 = a/math.sqrt(1-e2*math.sin(fi_1)**2)
+t_1 = math.tan(fi_1)
+ni_1 = math.sqrt(e_2)* math.cos(fi_1)
 
-#nemodulirane koordinate so x_1 in y_1
 
-fiz = fix - (t_1/(2*n_1**2))*(1+ni_1**2)*y_1**2 + (t_1/(24*n_1**4))*(5 + 3*t_1**2 + 6*ni_1**2 - 6*ni_1**2*t_1**2)*y_1**4 - (t_1/(720*n_1**6))*(61 + 90*t_1**2 + 45*t_1**4)*y_1**6
-lz = y_1/(n_1*math.cos(fiz)) - (1+2*t_1**2*ni_1*2)/(6*n_1**3*math.cos(fiz)) + y_1**5*(5 + 28*t_1**2 + 24* t_1**4)/(120*n_1**5*math.cos(fiz))
-deltaz = 15 + math.degrees(lz)
-fiz = math.degrees(fiz)
+fi_z = fi_1 - t_1*(1+ni_1**2)*y_1**2/(2*n_1**2) + t_1*(5 + 3*t_1**2 + 6*ni_1**2 -6*ni_1**2*t_1**2)*y_1**4/(24*n_1**4) - t_1*(61 + 90*t_1**2 + 45* t_1**4)*y_1**6/(720*n_1**6)
+l_1 = y_1/(n_1*math.cos(fi_1)) - (1+2*t_1**2 + ni_1**2)*y_1**3/(6*n_1**3*math.cos(fi_1)) + (5 + 28*t_1**2 + 24*t_1**4)* y_1**5/(120*n_1**5*math.cos(fi_1))
+del_1 = 15 + math.degrees(l_1)
+phi_1 = math.degrees(fi_z)
 
-mylist.extend(['fi osnovni iterativni', fiz] + ['delta osnovni iterativni', deltaz])
+mylist.extend(['fi reiteriran', phi_1] + ['delta reiterirana', del_1])
 
 
 #write to csv
