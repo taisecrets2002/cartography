@@ -24,21 +24,21 @@ with open('C:/Users/krist/OneDrive/Desktop/faks/kart.csv', 'w') as f:
 
 #drugi del naloge
 
-fia = 46.03738
-fib = 46.06510417
-fic = 46.05131694
+fia = math.radians(46.03738)
+fib = math.radians(46.06510417)
+fic = math.radians(46.05131694)
 
-deltaa=14.52611861
-deltab = 14.53471694
-deltac= 14.57088889 
+deltaa= math.radians(14.52611861)
+deltab = math.radians(14.53471694)
+deltac= math.radians(14.57088889 )
 
 fisr = (fia+fib+fic)/3
 deltasr = (deltaa + deltab+ deltac)/3
 
 
-Nsr= a/((1-e2*(math.sin(math.radians(fisr)))**2)**(1/2))
-psr = Nsr*math.cos(math.radians(fisr))
-msr=(a*(1-e2))/(1-e2*math.sin(math.radians(fisr))**2)**(3/2)
+Nsr= a/((1-e2*(math.sin(fisr))**2)**(1/2))
+psr = Nsr*math.cos(fisr)
+msr=(a*(1-e2))/(1-e2*math.sin(fisr)**2)**(3/2)
 kfi= 2* math.pi*msr/(360)
 kdelta = 2* math.pi*psr/(360)
 
@@ -65,23 +65,53 @@ nubc = math.degrees(math.atan(debc/fbc)) + 180
 
 beta = nuab - nubc
 
+print("fiab=")
 print(fiab)
+print("fibc=")
 print(fibc)
+print("deltaab=")
 print(deltaab)
+print("deltabc=")
 print(deltabc)
+print("fisr=")
 print(fisr)
+print("deltasr=")
 print(deltasr)
+print("Nsr=")
 print(Nsr)
+print("psr=")
 print(psr)
+print("msr=")
 print(msr)
+print("kfi=")
 print(kfi)
+print("kdelta=")
 print(kdelta)
+print("fiab=")
+print(fiab)
+print("deltaab=")
+print(deltaab)
+print("fibc=")
+print(fibc)
+print("deltabc=")
+print(deltabc)
+print("fab=")
 print(fab)
+print("fbc=")
 print(fbc)
+print("deab=")
 print(deab)
+print("debc=")
 print(debc)
+print("dab=")
 print(dab)
+print("dbc=")
 print(dbc)
+print("nuab=")
 print(nuab)
+print("nubc=")
 print(nubc)
+print("beta=")
 print(beta)
+
+
